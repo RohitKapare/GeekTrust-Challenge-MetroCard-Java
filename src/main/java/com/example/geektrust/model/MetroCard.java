@@ -21,4 +21,13 @@ public class MetroCard {
   public String getCardNumber() {
     return cardNumber;
   }
+
+  public void deduct(double amount) {
+    this.balance -= amount;
+  }
+
+  public void recharge(double amount) {
+    this.balance += amount;
+  }
+
 }
