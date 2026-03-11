@@ -10,7 +10,7 @@ public class Station {
   private double totalDiscount;
   private final Map<PassengerType, Integer> passengerCount;
 
-  public Station(String stationName, double totalDiscount, double totalCollection) {
+  public Station(String stationName) {
     this.stationName = stationName;
     this.totalDiscount = 0;
     this.totalCollection = 0;
