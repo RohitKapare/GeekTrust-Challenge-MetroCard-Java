@@ -1,21 +1,21 @@
 package com.example.geektrust.command;
 
-import com.example.geektrust.service.MetroService;
+import com.example.geektrust.model.PassengerType;
+import com.example.geektrust.service.JourneyService;
 
-public class CheckInCommand implements ICommand {
+public class CheckInCommand implements Command {
 
-  private final MetroService metroService;
+  private final JourneyService journeyService;
 
-  public CheckInCommand(MetroService metroService) {
-    this.metroService = metroService;
+  public CheckInCommand(JourneyService journeyService) {
+    this.journeyService = journeyService;
   }
 
   @Override
   public void execute(String[] tokens) {
-    String cardId = tokens[1];
-    String passengerType = tokens[2];
-    String fromStation = tokens[3];
-
-    metroService.processCheckIn(cardId, passengerType, fromStation);
+    String cardNumber = tokens[1];
+    PassengerType type = PassengerType.valueOf(tokens[2].toUpperCase());
+    String fromStation = tokens[3].toUpperCase();
+    journeyService.checkIn(cardNumber, type, fromStation);
   }
 }

@@ -1,22 +1,18 @@
 package com.example.geektrust.command;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.example.geektrust.factory.CommandFactory;
 
 public class CommandInvoker {
-  private final Map<String, ICommand> commandMap = new HashMap<>();
+  private final CommandFactory commandFactory;
 
-  public void register(String commandName, ICommand command) {
-    commandMap.put(commandName, command);
+  public CommandInvoker(CommandFactory commandFactory) {
+    this.commandFactory = commandFactory;
   }
 
-  public void invoke(String input) {
-    String[] tokens = input.split(" ");
-    String commandName = tokens[0];
-
-    if(commandMap.containsKey(commandName)) {
-      commandMap.get(commandName).execute(tokens);
-    }
+  public void invoke(String line) {
+    if(line == null || line.trim().isEmpty()) return;
+    String[] tokens = line.trim().split("\\s+");
+    Command command = commandFactory.getCommand(tokens[0]);
+    command.execute(tokens);
   }
-
 }

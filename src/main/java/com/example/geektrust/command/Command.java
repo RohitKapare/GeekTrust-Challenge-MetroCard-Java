@@ -1,5 +1,5 @@
 package com.example.geektrust.command;
 
-public interface ICommand {
+public interface Command {
   void execute(String[] tokens);
 }
