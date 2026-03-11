@@ -1,42 +1,28 @@
 package com.example.geektrust;
 
+import com.example.geektrust.command.CommandInvoker;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
 
+  // Initilize repositories
+  // Initilize services
+  // Initilize commands
+  // Initilize command invoker
+  private final CommandInvoker commandInvoker = new CommandInvoker();
+  // Register commands
+
   public static void main(String[] args) {
-    /*
-    Sample code to read from file passed as command line argument
+
     try {
-        // the file to be opened for reading
-        FileInputStream fis = new FileInputStream(args[0]);
-        Scanner sc = new Scanner(fis); // file to be scanned
-        // returns true if there is another line to read
-        while (sc.hasNextLine()) {
-           //Add your code here to process input commands
-        }
-        sc.close(); // closes the scanner
-    } catch (IOException e) {
-    }
-    */
-    System.out.println("Hello World!");
-    // Sample code to read from file passed as command line argument
-    try {
-      // the file to be opened for reading
       FileInputStream fis = new FileInputStream(args[0]);
-      Scanner sc = new Scanner(fis); // file to be scanned
-      // returns true if there is another line to read
+      Scanner sc = new Scanner(fis);
       while (sc.hasNextLine()) {
-        //Add your code here to process input commands
-        String line = sc.nextLine();
-        List<String> tokens = Arrays.asList(line.split(" "));
-        System.out.println(tokens);
+        commandInvoker.invoke(sc.nextLine());
       }
-      sc.close(); // closes the scanner
+      sc.close();
     } catch (IOException e) {
       e.printStackTrace();
     }
