@@ -1,12 +1,33 @@
 package com.example.geektrust.repository;
 
 import com.example.geektrust.model.MetroCard;
+import java.util.HashMap;
+import java.util.Map;
 
-public interface MetroCardRepository {
+public class MetroCardRepository {
+  private static MetroCardRepository instance;
+  private final Map<String, MetroCard> cardsStorage = new HashMap<>();
 
-  void save(MetroCard metroCard);
+  private MetroCardRepository() {}
 
-  MetroCard findById(String cardNumber);
+  public static MetroCardRepository getInstance() {
+    if (instance == null) {
+      instance = new MetroCardRepository();
+    }
+    return instance;
+  }
 
-  boolean isExists(String cardNumber);
+  public void save(MetroCard metroCard) {
+    cardsStorage.put(metroCard.getCardNumber(), metroCard);
+  }
+
+
+  public MetroCard findById(String cardNumber) {
+    return cardsStorage.get(cardNumber);
+  }
+
+
+  public boolean isExists(String cardNumber) {
+    return cardsStorage.containsKey(cardNumber);
+  }
 }

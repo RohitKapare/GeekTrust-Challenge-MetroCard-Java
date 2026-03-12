@@ -1,11 +1,37 @@
 package com.example.geektrust.repository;
 
 import com.example.geektrust.model.Station;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public interface StationRepository {
+public class StationRepository {
 
-  Station findByName(String name);
+  private static StationRepository instance;
 
-  List<Station> findAll();
+  private final Map<String, Station> stationStorage = new HashMap<>();
+
+  private StationRepository() {
+    stationStorage.put("CENTRAL", new Station("CENTRAL"));
+    stationStorage.put("AIRPORT", new Station("AIRPORT"));
+  }
+
+  public static StationRepository getInstance() {
+    if (instance == null) {
+      instance = new StationRepository();
+    }
+    return instance;
+  }
+
+
+  public Station findByName(String name) {
+    return stationStorage.get(name.toUpperCase());
+  }
+
+
+  public List<Station> findAll() {
+    return new ArrayList<>(stationStorage.values());
+  }
+
 }

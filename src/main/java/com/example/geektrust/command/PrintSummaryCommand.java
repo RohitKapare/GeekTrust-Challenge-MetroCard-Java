@@ -2,11 +2,11 @@ package com.example.geektrust.command;
 
 import com.example.geektrust.service.JourneyService;
 
-public class PringSummaryCommand implements Command {
+public class PrintSummaryCommand implements Command {
 
   private final JourneyService journeyService;
 
-  public PringSummaryCommand(JourneyService journeyService) {
+  public PrintSummaryCommand(JourneyService journeyService) {
     this.journeyService = journeyService;
   }
 
