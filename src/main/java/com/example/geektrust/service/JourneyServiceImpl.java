@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class JourneyServiceImpl implements JourneyService{
+public class JourneyServiceImpl implements JourneyService {
 
   private static final double SERVICE_FEE_RATE = 0.02;
 
@@ -19,7 +19,8 @@ public class JourneyServiceImpl implements JourneyService{
   private final MetroCardService metroCardService;
   private final StationRepository stationRepository;
 
-  public JourneyServiceImpl(MetroCardService metroCardService, StationRepository stationRepository) {
+  public JourneyServiceImpl(MetroCardService metroCardService,
+      StationRepository stationRepository) {
     this.metroCardService = metroCardService;
     this.stationRepository = stationRepository;
   }
@@ -35,7 +36,7 @@ public class JourneyServiceImpl implements JourneyService{
 
     boolean isReturn = isReturnJourney(cardNumber, fromStation);
     double fare;
-    if(isReturn) {
+    if (isReturn) {
       fare = discountedFare;
       journeyTracker.remove(cardNumber);
     } else {
@@ -53,7 +54,9 @@ public class JourneyServiceImpl implements JourneyService{
   }
 
   private boolean isReturnJourney(String cardNumber, String fromStation) {
-    if( !journeyTracker.containsKey(cardNumber)) return false;
+    if (!journeyTracker.containsKey(cardNumber)) {
+      return false;
+    }
     String lastStation = journeyTracker.get(cardNumber);
     return !lastStation.equalsIgnoreCase(fromStation);
   }
@@ -63,8 +66,8 @@ public class JourneyServiceImpl implements JourneyService{
     List<Station> stations = stationRepository.findAll();
     for (Station station : stations) {
       System.out.println("TOTAL_COLLECTION " + station.getStationName()
-          + " " + station.getTotalCollection()
-           + " " + station.getTotalDiscount());
+          + " " + (int) station.getTotalCollection()
+          + " " + (int) station.getTotalDiscount());
       System.out.println("PASSENGER_TYPE_SUMMARY");
 
       station.getPassengerCount().entrySet().stream()
