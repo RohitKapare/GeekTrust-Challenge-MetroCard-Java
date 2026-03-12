@@ -31,24 +31,27 @@ public class JourneyServiceImpl implements JourneyService {
     Station station = stationRepository.findByName((fromStation));
 
     FareStrategy strategy = FareStrategyFactory.getStrategy(passengerType);
-    double baseFare = strategy.getBaseFare();
-    double discountedFare = strategy.getDiscountedFare();
+    int baseFare = strategy.getBaseFare();
+    int discountedFare = strategy.getDiscountedFare();
 
     boolean isReturn = isReturnJourney(cardNumber, fromStation);
-    double fare;
+    int fare;
+    int discount;
+
     if (isReturn) {
       fare = discountedFare;
+      discount = baseFare - discountedFare;
       journeyTracker.remove(cardNumber);
     } else {
       fare = baseFare;
+      discount = 0;
       journeyTracker.put(cardNumber, fromStation);
     }
 
-    double serviceFee = metroCardService.rechargeIfRequired(card, fare);
+    int serviceFee = metroCardService.rechargeIfRequired(card, fare);
     card.deduct(fare);
-
     station.addCollection(fare + serviceFee);
-    station.addDiscount(baseFare - discountedFare);
+    station.addDiscount(discount);
     station.incrementPassengerCount(passengerType);
 
   }

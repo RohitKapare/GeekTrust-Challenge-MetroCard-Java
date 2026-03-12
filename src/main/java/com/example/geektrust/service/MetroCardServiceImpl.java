@@ -12,7 +12,7 @@ public class MetroCardServiceImpl implements MetroCardService {
   }
 
   @Override
-  public void setBalance(String cardNumber, double balance) {
+  public void setBalance(String cardNumber, int balance) {
     MetroCard card = new MetroCard(cardNumber, balance);
     metroCardRepository.save(card);
   }
@@ -20,18 +20,19 @@ public class MetroCardServiceImpl implements MetroCardService {
   @Override
   public MetroCard getCard(String cardNumber) {
     MetroCard card = metroCardRepository.findById(cardNumber);
-    if(card == null) {
+    if (card == null) {
       throw new IllegalArgumentException("MetroCard not found for card number: " + cardNumber);
     }
     return card;
   }
 
   @Override
-  public double rechargeIfRequired(MetroCard card, double requiredFare) {
-    double neededRecharge = requiredFare - card.getBalance();
-    if(neededRecharge <= 0) {
+  public int rechargeIfRequired(MetroCard card, int requiredFare) {
+    int neededRecharge = requiredFare - card.getBalance();
+    if (neededRecharge <= 0) {
       return 0;
     }
-    return Math.ceil(neededRecharge * 0.02);
+    card.recharge(neededRecharge);
+    return (int) Math.ceil(neededRecharge * 0.02);
   }
 }

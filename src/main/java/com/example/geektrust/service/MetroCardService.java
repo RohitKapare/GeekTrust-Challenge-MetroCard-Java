@@ -4,9 +4,9 @@ import com.example.geektrust.model.MetroCard;
 
 public interface MetroCardService {
 
-  void setBalance(String cardNumber, double balance);
+  void setBalance(String cardNumber, int balance);
 
   MetroCard getCard(String cardNumber);
 
-  double rechargeIfRequired(MetroCard card, double requiredField);
+  int rechargeIfRequired(MetroCard card, int requiredField);
 }

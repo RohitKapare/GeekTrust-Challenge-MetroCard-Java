@@ -6,8 +6,8 @@ import java.util.Map;
 public class Station {
 
   private final String stationName;
-  private double totalCollection;
-  private double totalDiscount;
+  private int totalCollection;
+  private int totalDiscount;
   private final Map<PassengerType, Integer> passengerCount;
 
   public Station(String stationName) {
@@ -24,11 +24,11 @@ public class Station {
     return stationName;
   }
 
-  public double getTotalCollection() {
+  public int getTotalCollection() {
     return totalCollection;
   }
 
-  public double getTotalDiscount() {
+  public int getTotalDiscount() {
     return totalDiscount;
   }
 
@@ -36,11 +36,11 @@ public class Station {
     return passengerCount;
   }
 
-  public void addCollection(double amount) {
+  public void addCollection(int amount) {
     this.totalCollection += amount;
   }
 
-  public void addDiscount(double amount) {
+  public void addDiscount(int amount) {
     this.totalDiscount += amount;
   }
 

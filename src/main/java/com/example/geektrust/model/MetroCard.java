@@ -3,18 +3,18 @@ package com.example.geektrust.model;
 public class MetroCard {
 
   private final String cardNumber;
-  private double balance;
+  private int balance;
 
-  public MetroCard(String cardNumber, double balance) {
+  public MetroCard(String cardNumber, int balance) {
     this.cardNumber = cardNumber;
     this.balance = balance;
   }
 
-  public double getBalance() {
+  public int getBalance() {
     return balance;
   }
 
-  public void setBalance(double balance) {
+  public void setBalance(int balance) {
     this.balance = balance;
   }
 
@@ -22,11 +22,11 @@ public class MetroCard {
     return cardNumber;
   }
 
-  public void deduct(double amount) {
+  public void deduct(int amount) {
     this.balance -= amount;
   }
 
-  public void recharge(double amount) {
+  public void recharge(int amount) {
     this.balance += amount;
   }
 

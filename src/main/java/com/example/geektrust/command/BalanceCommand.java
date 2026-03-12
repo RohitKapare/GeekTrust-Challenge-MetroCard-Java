@@ -13,7 +13,7 @@ public class BalanceCommand implements Command{
   @Override
   public void execute(String[] tokens) {
     String cardNumber = tokens[1];
-    double balance = Double.parseDouble(tokens[2]);
+    int balance = Integer.parseInt(tokens[2]);
     metroCardService.setBalance(cardNumber, balance);
   }
 }
