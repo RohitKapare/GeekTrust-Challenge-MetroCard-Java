@@ -2,7 +2,7 @@ package com.example.geektrust.repository;
 
 import com.example.geektrust.model.Station;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +10,7 @@ public class StationRepository {
 
   private static StationRepository instance;
 
-  private final Map<String, Station> stationStorage = new HashMap<>();
+  private final Map<String, Station> stationStorage = new LinkedHashMap<>();
 
   private StationRepository() {
     stationStorage.put("CENTRAL", new Station("CENTRAL"));
