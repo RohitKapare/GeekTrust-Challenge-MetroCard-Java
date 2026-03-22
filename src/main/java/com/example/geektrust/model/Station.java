@@ -1,5 +1,6 @@
 package com.example.geektrust.model;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,7 +34,7 @@ public class Station {
   }
 
   public Map<PassengerType, Integer> getPassengerCount() {
-    return passengerCount;
+    return Collections.unmodifiableMap(passengerCount);
   }
 
   public void addCollection(int amount) {
