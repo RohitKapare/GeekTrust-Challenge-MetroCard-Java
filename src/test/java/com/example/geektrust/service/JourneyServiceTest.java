@@ -1,25 +1,26 @@
 package com.example.geektrust.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.when;
+
+import com.example.geektrust.exceptions.ResourceNotFoundException;
 import com.example.geektrust.model.MetroCard;
 import com.example.geektrust.model.PassengerType;
 import com.example.geektrust.model.Station;
 import com.example.geektrust.repository.StationRepository;
 import com.example.geektrust.service.impl.JourneyServiceImpl;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.Arrays;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.util.Arrays;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.when;
 
 public class JourneyServiceTest {
 
@@ -152,16 +153,30 @@ public class JourneyServiceTest {
 
     String n = System.lineSeparator();
     String expectedOutput =
-      "TOTAL_COLLECTION CENTRAL 300 0" + n +
-      "PASSENGER_TYPE_SUMMARY" + n +
-      "ADULT 1" + n +
-      "SENIOR_CITIZEN 1" + n +
-      "TOTAL_COLLECTION AIRPORT 403 100" + n +
-      "PASSENGER_TYPE_SUMMARY" + n +
-      "ADULT 2" + n +
-      "KID 2" + n;
+        "TOTAL_COLLECTION CENTRAL 300 0" + n +
+            "PASSENGER_TYPE_SUMMARY" + n +
+            "ADULT 1" + n +
+            "SENIOR_CITIZEN 1" + n +
+            "TOTAL_COLLECTION AIRPORT 403 100" + n +
+            "PASSENGER_TYPE_SUMMARY" + n +
+            "ADULT 2" + n +
+            "KID 2" + n;
 
     assertEquals(expectedOutput, outContent.toString());
+  }
+
+  @Test
+  @DisplayName("Should throw ResourceNotFoundException when station not in repository")
+  void InvalidStationThrowResourceNotFoundException() {
+    MetroCard card = new MetroCard("MK14", 600);
+
+    when(metroCardService.getCard("MK14")).thenReturn(card);
+    when(stationRepository.findByName("INVALID_STATION")).thenReturn(Optional.empty());
+
+    assertThrows(
+        ResourceNotFoundException.class,
+        () -> journeyService.checkIn("MK14", PassengerType.ADULT, "INVALID_STATION")
+    );
   }
 }
 

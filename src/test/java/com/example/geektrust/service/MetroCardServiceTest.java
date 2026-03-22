@@ -1,7 +1,6 @@
 package com.example.geektrust.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import com.example.geektrust.exceptions.ResourceNotFoundException;
 import com.example.geektrust.model.MetroCard;
 import com.example.geektrust.repository.MetroCardRepository;
 import com.example.geektrust.service.impl.MetroCardServiceImpl;
@@ -10,6 +9,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
 
 public class MetroCardServiceTest {
   @Mock
@@ -50,5 +55,13 @@ public class MetroCardServiceTest {
     int serviceFee = metroCardService.rechargeIfRequired(card, 60);
 
     assertEquals(2, serviceFee);
+  }
+
+  @Test
+  @DisplayName("Should throw ResourceNotFoundException when card not in repository")
+  void InvalidCardThrowResourceNotFoundException() {
+    when(metroCardRepository.findById("INVALID_CARD")).thenReturn(Optional.empty());
+
+    assertThrows(ResourceNotFoundException.class, () -> metroCardService.getCard("INVALID_CARD"));
   }
 }
