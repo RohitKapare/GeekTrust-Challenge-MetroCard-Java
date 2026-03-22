@@ -29,3 +29,16 @@ build/
 .project
 .settings/
 .gradle/
+
+# VS Code and IntelliJ IDEA project files
+.vscode/
+.idea/
+
+# VS Code specifics
+.history/
+*.code-workspace
+
+# System Files
+.DS_Store
+Thumbs.db
+desktop.ini
