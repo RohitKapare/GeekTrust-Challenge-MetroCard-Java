@@ -41,6 +41,23 @@ Then use this command:
 ```
 .\gradlew.bat run --args="sample_input/input1.txt"
 ```
+---
+
+# How to run the tests and effectively run anything in this project:
+
+Well, the starter kit provided for this project is really out-dated. And will give trouble running in modern setups and IDEs that fire ups gradle as soon as you open IDE.
+1. Install java 8 a.k.a. 1.8 and set it as environmental variable.
+2. Even though there gradlew wrapper in this project which is of version 5.1, which works with java 8. Still need to install and set path of gradle 5.1 in C directory. (This seems to fix most of the IDE issues.)
+3. Before running tests: 
+Stop running gradle Daemons `./gradlew --stop`, Delete `.gradle` folder in project root. Delete `gradle 5.1` folder from `%userprofile%/gradle/caches` folder.
+**Then use this command to run tests: ** 
+```
+./gradlew clean test "-Dorg.gradle.java.home=C:\Program Files\Java\jdk1.8.0_202"
+```
+Replace path with your java 8 folder location.
+
+---
+
 
  # Running the code for multiple test cases
 
