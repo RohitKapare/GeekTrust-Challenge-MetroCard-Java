@@ -31,7 +31,8 @@ public class JourneyServiceImpl implements JourneyService {
   @Override
   public void checkIn(String cardNumber, PassengerType passengerType, String fromStation) {
     MetroCard card = metroCardService.getCard(cardNumber);
-    Station station = stationRepository.findByName((fromStation)).orElseThrow(() -> new ResourceNotFoundException("Station not found for name: " + fromStation));
+    Station station = stationRepository.findByName((fromStation)).orElseThrow(
+        () -> new ResourceNotFoundException("Station not found for name: " + fromStation));
 
     FareStrategy strategy = FareStrategyFactory.getStrategy(passengerType);
     int baseFare = strategy.getBaseFare();
@@ -77,12 +78,12 @@ public class JourneyServiceImpl implements JourneyService {
       System.out.println("PASSENGER_TYPE_SUMMARY");
 
       station.getPassengerCount().entrySet().stream()
-          .filter(e -> e.getValue() > 0)
-          .sorted(
-              Map.Entry.<PassengerType, Integer>comparingByValue(Comparator.reverseOrder())
-                  .thenComparing(e -> e.getKey().name())
-          )
-          .forEach(e -> System.out.println(e.getKey() + " " + e.getValue()));
+             .filter(e -> e.getValue() > 0)
+             .sorted(
+                 Map.Entry.<PassengerType, Integer>comparingByValue(Comparator.reverseOrder())
+                          .thenComparing(e -> e.getKey().name())
+             )
+             .forEach(e -> System.out.println(e.getKey() + " " + e.getValue()));
     }
   }
 }

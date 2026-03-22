@@ -21,7 +21,8 @@ public class MetroCardServiceImpl implements MetroCardService {
 
   @Override
   public MetroCard getCard(String cardNumber) {
-    return metroCardRepository.findById(cardNumber).orElseThrow(() -> new ResourceNotFoundException("Metro card not found for card: " + cardNumber));
+    return metroCardRepository.findById(cardNumber).orElseThrow(
+        () -> new ResourceNotFoundException("Metro card not found for card: " + cardNumber));
   }
 
   @Override

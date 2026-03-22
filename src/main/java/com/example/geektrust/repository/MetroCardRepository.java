@@ -7,10 +7,12 @@ import java.util.Map;
 import java.util.Optional;
 
 public class MetroCardRepository {
+
   private static MetroCardRepository instance;
   private final Map<String, MetroCard> cardsStorage = new HashMap<>();
 
-  private MetroCardRepository() {}
+  private MetroCardRepository() {
+  }
 
   public static MetroCardRepository getInstance() {
     if (instance == null) {

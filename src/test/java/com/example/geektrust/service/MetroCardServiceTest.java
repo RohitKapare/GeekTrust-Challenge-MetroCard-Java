@@ -1,22 +1,22 @@
 package com.example.geektrust.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
+
 import com.example.geektrust.exceptions.ResourceNotFoundException;
 import com.example.geektrust.model.MetroCard;
 import com.example.geektrust.repository.MetroCardRepository;
 import com.example.geektrust.service.impl.MetroCardServiceImpl;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
-
 public class MetroCardServiceTest {
+
   @Mock
   private MetroCardRepository metroCardRepository;
 

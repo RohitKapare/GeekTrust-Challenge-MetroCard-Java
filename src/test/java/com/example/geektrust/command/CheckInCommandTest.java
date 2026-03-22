@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 public class CheckInCommandTest {
+
   @Mock
   private JourneyService journeyService;
 
@@ -18,25 +19,29 @@ public class CheckInCommandTest {
 
   @BeforeEach
   void setUp() {
-      MockitoAnnotations.initMocks(this);
-      checkInCommand = new CheckInCommand(journeyService);
+    MockitoAnnotations.initMocks(this);
+    checkInCommand = new CheckInCommand(journeyService);
   }
 
   @Test
   @DisplayName("Should throw InvalidPassengerTypeException for invalid passenger type")
   void InvalidPassengerTypeThrowInvalidPassengerTypeException() {
-      String[] tokens = {"CHECK_IN", "MC1", "INVALID_TYPE", "CENTRAL"};
+    String[] tokens = {"CHECK_IN", "MC1", "INVALID_TYPE", "CENTRAL"};
 
-      assertThrows(InvalidPassengerTypeException.class,
-          () -> checkInCommand.execute(tokens));
+    assertThrows(
+        InvalidPassengerTypeException.class,
+        () -> checkInCommand.execute(tokens)
+    );
   }
 
   @Test
   @DisplayName("Should throw IllegalArgumentException when invalid arguments are passed")
   void InvalidCommandThrowIllegalArgumentExceptionForWrongTokenCount() {
-      String[] tokens = {"CHECK_IN", "MC1"};   // missing passenger type and station
+    String[] tokens = {"CHECK_IN", "MC1"};   // missing passenger type and station
 
-      assertThrows(IllegalArgumentException.class,
-          () -> checkInCommand.execute(tokens));
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> checkInCommand.execute(tokens)
+    );
   }
 }

@@ -15,7 +15,7 @@ public class Station {
     this.totalDiscount = 0;
     this.totalCollection = 0;
     this.passengerCount = new HashMap<>();
-    for(PassengerType type : PassengerType.values()) {
+    for (PassengerType type : PassengerType.values()) {
       passengerCount.put(type, 0);
     }
   }

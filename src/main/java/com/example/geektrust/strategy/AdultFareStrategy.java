@@ -1,6 +1,6 @@
 package com.example.geektrust.strategy;
 
-public class AdultFareStrategy implements FareStrategy{
+public class AdultFareStrategy implements FareStrategy {
 
   @Override
   public int getBaseFare() {
