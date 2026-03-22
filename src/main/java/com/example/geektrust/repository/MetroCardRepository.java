@@ -1,8 +1,10 @@
 package com.example.geektrust.repository;
 
 import com.example.geektrust.model.MetroCard;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class MetroCardRepository {
   private static MetroCardRepository instance;
@@ -22,8 +24,8 @@ public class MetroCardRepository {
   }
 
 
-  public MetroCard findById(String cardNumber) {
-    return cardsStorage.get(cardNumber);
+  public Optional<MetroCard> findById(String cardNumber) {
+    return Optional.ofNullable(cardsStorage.get(cardNumber));
   }
 
 

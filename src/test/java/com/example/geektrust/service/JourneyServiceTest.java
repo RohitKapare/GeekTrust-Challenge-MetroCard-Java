@@ -1,22 +1,25 @@
 package com.example.geektrust.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.when;
-
 import com.example.geektrust.model.MetroCard;
 import com.example.geektrust.model.PassengerType;
 import com.example.geektrust.model.Station;
 import com.example.geektrust.repository.StationRepository;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.util.Arrays;
+import com.example.geektrust.service.impl.JourneyServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.Arrays;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.when;
 
 public class JourneyServiceTest {
 
@@ -45,7 +48,7 @@ public class JourneyServiceTest {
     MetroCard card = new MetroCard("MC1", 600);
     when(metroCardService.getCard("MC1")).thenReturn(card);
     when(metroCardService.rechargeIfRequired(card, 200)).thenReturn(0);
-    when(stationRepository.findByName("CENTRAL")).thenReturn(centralStation);
+    when(stationRepository.findByName("CENTRAL")).thenReturn(Optional.of(centralStation));
 
     journeyService.checkIn("MC1", PassengerType.ADULT, "CENTRAL");
 
@@ -61,8 +64,8 @@ public class JourneyServiceTest {
     MetroCard card = new MetroCard("MC1", 600);
     when(metroCardService.getCard("MC1")).thenReturn(card);
     when(metroCardService.rechargeIfRequired(any(MetroCard.class), anyInt())).thenReturn(0);
-    when(stationRepository.findByName("CENTRAL")).thenReturn(centralStation);
-    when(stationRepository.findByName("AIRPORT")).thenReturn(airportStation);
+    when(stationRepository.findByName("CENTRAL")).thenReturn(Optional.of(centralStation));
+    when(stationRepository.findByName("AIRPORT")).thenReturn(Optional.of(airportStation));
 
     journeyService.checkIn("MC1", PassengerType.ADULT, "CENTRAL");
 
@@ -78,8 +81,8 @@ public class JourneyServiceTest {
     MetroCard card = new MetroCard("MC1", 1000);
     when(metroCardService.getCard("MC1")).thenReturn(card);
     when(metroCardService.rechargeIfRequired(any(MetroCard.class), anyInt())).thenReturn(0);
-    when(stationRepository.findByName("CENTRAL")).thenReturn(centralStation);
-    when(stationRepository.findByName("AIRPORT")).thenReturn(airportStation);
+    when(stationRepository.findByName("CENTRAL")).thenReturn(Optional.of(centralStation));
+    when(stationRepository.findByName("AIRPORT")).thenReturn(Optional.of(airportStation));
 
     journeyService.checkIn("MC1", PassengerType.ADULT, "CENTRAL");
     journeyService.checkIn("MC1", PassengerType.ADULT, "AIRPORT");
@@ -96,7 +99,7 @@ public class JourneyServiceTest {
     MetroCard card = new MetroCard("MC4", 50);
     when(metroCardService.getCard("MC4")).thenReturn(card);
     when(metroCardService.rechargeIfRequired(card, 200)).thenReturn(3);
-    when(stationRepository.findByName("AIRPORT")).thenReturn(airportStation);
+    when(stationRepository.findByName("AIRPORT")).thenReturn(Optional.of(airportStation));
     when(metroCardService.rechargeIfRequired(card, 200)).thenReturn(3);
 
     journeyService.checkIn("MC4", PassengerType.ADULT, "AIRPORT");
@@ -110,8 +113,8 @@ public class JourneyServiceTest {
     MetroCard card = new MetroCard("MC1", 1000);
     when(metroCardService.getCard("MC1")).thenReturn(card);
     when(metroCardService.rechargeIfRequired(any(MetroCard.class), anyInt())).thenReturn(0);
-    when(stationRepository.findByName("CENTRAL")).thenReturn(centralStation);
-    when(stationRepository.findByName("AIRPORT")).thenReturn(airportStation);
+    when(stationRepository.findByName("CENTRAL")).thenReturn(Optional.of(centralStation));
+    when(stationRepository.findByName("AIRPORT")).thenReturn(Optional.of(airportStation));
 
     journeyService.checkIn("MC1", PassengerType.ADULT, "CENTRAL");
     journeyService.checkIn("MC1", PassengerType.ADULT, "AIRPORT");

@@ -1,10 +1,13 @@
-package com.example.geektrust.service;
+package com.example.geektrust.service.impl;
 
+import com.example.geektrust.exceptions.ResourceNotFoundException;
 import com.example.geektrust.factory.FareStrategyFactory;
 import com.example.geektrust.model.MetroCard;
 import com.example.geektrust.model.PassengerType;
 import com.example.geektrust.model.Station;
 import com.example.geektrust.repository.StationRepository;
+import com.example.geektrust.service.JourneyService;
+import com.example.geektrust.service.MetroCardService;
 import com.example.geektrust.strategy.FareStrategy;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -28,7 +31,7 @@ public class JourneyServiceImpl implements JourneyService {
   @Override
   public void checkIn(String cardNumber, PassengerType passengerType, String fromStation) {
     MetroCard card = metroCardService.getCard(cardNumber);
-    Station station = stationRepository.findByName((fromStation));
+    Station station = stationRepository.findByName((fromStation)).orElseThrow(() -> new ResourceNotFoundException("Station not found for name: " + fromStation));
 
     FareStrategy strategy = FareStrategyFactory.getStrategy(passengerType);
     int baseFare = strategy.getBaseFare();

@@ -1,10 +1,8 @@
 package com.example.geektrust.repository;
 
 import com.example.geektrust.model.Station;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 public class StationRepository {
 
@@ -25,8 +23,8 @@ public class StationRepository {
   }
 
 
-  public Station findByName(String name) {
-    return stationStorage.get(name.toUpperCase());
+  public Optional<Station> findByName(String name) {
+    return Optional.ofNullable(stationStorage.get(name.toUpperCase()));
   }
 
 

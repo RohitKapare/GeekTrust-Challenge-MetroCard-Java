@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.example.geektrust.model.MetroCard;
 import com.example.geektrust.repository.MetroCardRepository;
+import com.example.geektrust.service.impl.MetroCardServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

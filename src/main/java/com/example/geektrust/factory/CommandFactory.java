@@ -4,6 +4,7 @@ import com.example.geektrust.command.BalanceCommand;
 import com.example.geektrust.command.CheckInCommand;
 import com.example.geektrust.command.Command;
 import com.example.geektrust.command.PrintSummaryCommand;
+import com.example.geektrust.exceptions.NoSuchCommandException;
 import com.example.geektrust.service.JourneyService;
 import com.example.geektrust.service.MetroCardService;
 
@@ -26,7 +27,7 @@ public class CommandFactory {
       case "PRINT_SUMMARY":
         return new PrintSummaryCommand(journeyService);
       default:
-        throw new IllegalArgumentException("Unknown command: " + commandName);
+        throw new NoSuchCommandException("No command found for: " + commandName);
     }
   }
 }

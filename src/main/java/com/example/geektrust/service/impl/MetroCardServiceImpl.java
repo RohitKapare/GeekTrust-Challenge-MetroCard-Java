@@ -1,7 +1,9 @@
-package com.example.geektrust.service;
+package com.example.geektrust.service.impl;
 
+import com.example.geektrust.exceptions.ResourceNotFoundException;
 import com.example.geektrust.model.MetroCard;
 import com.example.geektrust.repository.MetroCardRepository;
+import com.example.geektrust.service.MetroCardService;
 
 public class MetroCardServiceImpl implements MetroCardService {
 
@@ -19,11 +21,7 @@ public class MetroCardServiceImpl implements MetroCardService {
 
   @Override
   public MetroCard getCard(String cardNumber) {
-    MetroCard card = metroCardRepository.findById(cardNumber);
-    if (card == null) {
-      throw new IllegalArgumentException("MetroCard not found for card number: " + cardNumber);
-    }
-    return card;
+    return metroCardRepository.findById(cardNumber).orElseThrow(() -> new ResourceNotFoundException("Metro card not found for card: " + cardNumber));
   }
 
   @Override

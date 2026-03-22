@@ -12,6 +12,9 @@ public class BalanceCommand implements Command{
 
   @Override
   public void execute(String[] tokens) {
+    if(tokens.length != 3) {
+      throw new IllegalArgumentException("BALANCE command should be in format: BALANCE <cardId> <amount>");
+    }
     String cardNumber = tokens[1];
     int balance = Integer.parseInt(tokens[2]);
     metroCardService.setBalance(cardNumber, balance);
