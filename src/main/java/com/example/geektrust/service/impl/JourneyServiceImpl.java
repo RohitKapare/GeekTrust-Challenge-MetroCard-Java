@@ -16,8 +16,6 @@ import java.util.Map;
 
 public class JourneyServiceImpl implements JourneyService {
 
-  private static final double SERVICE_FEE_RATE = 0.02;
-
   private final Map<String, String> journeyTracker = new HashMap<>();
   private final MetroCardService metroCardService;
   private final StationRepository stationRepository;

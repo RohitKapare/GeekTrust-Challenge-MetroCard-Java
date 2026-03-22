@@ -15,7 +15,8 @@ public class CommandInvoker {
       return;
     }
     String[] tokens = line.trim().split("\\s+");
-    Command command = commandFactory.getCommand(tokens[0]);
+    String commandName = tokens[0];
+    Command command = commandFactory.getCommand(commandName);
     command.execute(tokens);
   }
 }

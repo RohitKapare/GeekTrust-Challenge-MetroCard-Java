@@ -39,6 +39,16 @@ public class MetroCardServiceTest {
   }
 
   @Test
+  @DisplayName("Should return zero service fee when balance is sufficient")
+  public void noRechargeNeededWhenSufficientBalance() {
+    MetroCard card = new MetroCard("MC1", 500);
+    int serviceFee = metroCardService.rechargeIfRequired(card, 200);
+
+    assertEquals(0, serviceFee);
+    assertEquals(500, card.getBalance());
+  }
+
+  @Test
   @DisplayName("Should recharge when balance is exactly zero")
   public void rechargeAtZeroBalance() {
     MetroCard card = new MetroCard("MC1", 0);

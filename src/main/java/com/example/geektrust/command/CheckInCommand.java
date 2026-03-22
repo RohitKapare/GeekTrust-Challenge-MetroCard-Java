@@ -6,6 +6,10 @@ import com.example.geektrust.service.JourneyService;
 
 public class CheckInCommand implements Command {
 
+  private final static int EXPECTED_TOKEN_COUNT = 4;
+  private final static int CARD_ID_INDEX = 1;
+  private final static int PASSENGER_TYPE_INDEX = 2;
+  private final static int FROM_STATION_INDEX = 3;
   private final JourneyService journeyService;
 
   public CheckInCommand(JourneyService journeyService) {
@@ -14,18 +18,18 @@ public class CheckInCommand implements Command {
 
   @Override
   public void execute(String[] tokens) {
-    if (tokens.length != 4) {
+    if (tokens.length != EXPECTED_TOKEN_COUNT) {
       throw new IllegalArgumentException(
-          "CHECK_IN command should be in format: CHECK_IN <METROCARD_NUMBER> <PASSENGER_TYPE> <FROM_STATION> ");
+          "CHECK_IN command should be in format: CHECK_IN <CARD_ID> <PASSENGER_TYPE> <FROM_STATION> ");
     }
-    String cardNumber = tokens[1];
+    String cardNumber = tokens[CARD_ID_INDEX];
     PassengerType type;
     try {
-      type = PassengerType.valueOf(tokens[2].toUpperCase());
+      type = PassengerType.valueOf(tokens[PASSENGER_TYPE_INDEX].toUpperCase());
     } catch (IllegalArgumentException e) {
       throw new InvalidPassengerTypeException("Invalid passenger type: " + tokens[2]);
     }
-    String fromStation = tokens[3].toUpperCase();
+    String fromStation = tokens[FROM_STATION_INDEX].toUpperCase();
     journeyService.checkIn(cardNumber, type, fromStation);
   }
 }

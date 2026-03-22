@@ -44,7 +44,7 @@ public class JourneyServiceTest {
   }
 
   @Test
-  @DisplayName("Single trip from central for ADULT with not discount, full fare")
+  @DisplayName("Single trip from central for ADULT with no discount, full fare 200")
   public void singleTripAdultFromCentral() {
     MetroCard card = new MetroCard("MC1", 600);
     when(metroCardService.getCard("MC1")).thenReturn(card);
@@ -57,6 +57,38 @@ public class JourneyServiceTest {
     assertEquals(0, centralStation.getTotalDiscount());
     assertEquals(1, (int) centralStation.getPassengerCount().get(PassengerType.ADULT));
     assertEquals(400, card.getBalance());
+  }
+
+  @Test
+  @DisplayName("Single trip from airport for KID with no discount, full fare 50")
+  public void singleTripKidFromAirport() {
+    MetroCard card = new MetroCard("MC1", 100);
+    when(metroCardService.getCard("MC1")).thenReturn(card);
+    when(metroCardService.rechargeIfRequired(card, 50)).thenReturn(0);
+    when(stationRepository.findByName("AIRPORT")).thenReturn(Optional.of(airportStation));
+
+    journeyService.checkIn("MC1", PassengerType.KID, "AIRPORT");
+
+    assertEquals(50, airportStation.getTotalCollection());
+    assertEquals(0, airportStation.getTotalDiscount());
+    assertEquals(1, (int) airportStation.getPassengerCount().get(PassengerType.KID));
+    assertEquals(50, card.getBalance());
+  }
+
+  @Test
+  @DisplayName("Single trip from central for SENIOR_CITIZEN with no discount, full fare 100")
+  public void singleTripSeniorCitizenFromCentral() {
+    MetroCard card = new MetroCard("MC1", 600);
+    when(metroCardService.getCard("MC1")).thenReturn(card);
+    when(metroCardService.rechargeIfRequired(card, 100)).thenReturn(0);
+    when(stationRepository.findByName("CENTRAL")).thenReturn(Optional.of(centralStation));
+
+    journeyService.checkIn("MC1", PassengerType.SENIOR_CITIZEN, "CENTRAL");
+
+    assertEquals(100, centralStation.getTotalCollection());
+    assertEquals(0, centralStation.getTotalDiscount());
+    assertEquals(1, (int) centralStation.getPassengerCount().get(PassengerType.SENIOR_CITIZEN));
+    assertEquals(500, card.getBalance());
   }
 
   @Test

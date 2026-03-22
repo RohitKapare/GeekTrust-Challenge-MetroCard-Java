@@ -9,7 +9,7 @@ public class SeniorCitizenFareStrategy implements FareStrategy {
 
   @Override
   public int getDiscountedFare() {
-    return (int) (getBaseFare() * 0.5);
+    return (int) (getBaseFare() * RETURN_DISCOUNT_RATE);
   }
 
 }

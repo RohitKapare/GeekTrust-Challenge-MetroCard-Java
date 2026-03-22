@@ -7,6 +7,7 @@ import com.example.geektrust.service.MetroCardService;
 
 public class MetroCardServiceImpl implements MetroCardService {
 
+  private static final double SERVICE_FEE_RATE = 0.02;
   private final MetroCardRepository metroCardRepository;
 
   public MetroCardServiceImpl(MetroCardRepository metroCardRepository) {
@@ -32,6 +33,6 @@ public class MetroCardServiceImpl implements MetroCardService {
       return 0;
     }
     card.recharge(neededRecharge);
-    return (int) Math.ceil(neededRecharge * 0.02);
+    return (int) Math.ceil(neededRecharge * SERVICE_FEE_RATE);
   }
 }
