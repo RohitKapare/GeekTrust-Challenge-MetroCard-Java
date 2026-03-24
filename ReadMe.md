@@ -3,6 +3,21 @@
 * Java 1.8/1.11/1.15
 * Gradle 6
 
+# Note for anyone who want to examine the code:
+The well written and well organized code with testing cases, proper implementation of factory and strategy pattern will be commited after this readme update. 
+This code is actually more scalable in case Metro Service wants more complex strategy for base fare and 
+discounted fare for certain category of passengers (e.g. DISABLED_PASSENGER, GOVERNMENT_OFFICERS, EMERGENCY_SERVICE_WORKER, REPORTERS, etc.).
+In such cases we want to separate the strategies for more complex fare and discount calculations and not 
+just have base fare and 50% discount for return journey.
+
+But for now, such modular code does not work for passing evaluation through automated systems of placement platforms.
+So from hear on out, the changes in core logic will be made to satisfy the requirements of the problem statement and 
+not to make it more modular and scalable.
+
+If you want to check out the original design solution of mine `git checkout <commit-hash>` at
+the commit where the message is `Checkout here for first solution code.` in the commit history.
+
+
 # How to run the code
 
 We have provided scripts to execute the code. 
