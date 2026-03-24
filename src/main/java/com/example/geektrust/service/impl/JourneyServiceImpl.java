@@ -1,14 +1,12 @@
 package com.example.geektrust.service.impl;
 
 import com.example.geektrust.exceptions.ResourceNotFoundException;
-import com.example.geektrust.factory.FareStrategyFactory;
 import com.example.geektrust.model.MetroCard;
 import com.example.geektrust.model.PassengerType;
 import com.example.geektrust.model.Station;
 import com.example.geektrust.repository.StationRepository;
 import com.example.geektrust.service.JourneyService;
 import com.example.geektrust.service.MetroCardService;
-import com.example.geektrust.strategy.FareStrategy;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -47,9 +45,8 @@ public class JourneyServiceImpl implements JourneyService {
 
   private void processJourney(MetroCard card, Station station, PassengerType passengerType,
       boolean isReturn) {
-    FareStrategy strategy = FareStrategyFactory.getStrategy(passengerType);
-    int fare = isReturn ? strategy.getDiscountedFare() : strategy.getBaseFare();
-    int discount = isReturn ? strategy.getBaseFare() - strategy.getDiscountedFare() : 0;
+    int fare = isReturn ? passengerType.getDiscountedFare() : passengerType.getBaseFare();
+    int discount = isReturn ? passengerType.getBaseFare() - passengerType.getDiscountedFare() : 0;
     int serviceFee = metroCardService.rechargeIfRequired(card, fare);
     card.deduct(fare);
     station.recordJourney(passengerType, fare + serviceFee, discount);
