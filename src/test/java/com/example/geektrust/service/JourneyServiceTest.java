@@ -160,16 +160,13 @@ public class JourneyServiceTest {
   @DisplayName("Passenger summary test to test output and sorting")
   public void passengerSummaryTest() {
 
-    centralStation.addCollection(300);
-    centralStation.incrementPassengerCount(PassengerType.ADULT);
-    centralStation.incrementPassengerCount(PassengerType.SENIOR_CITIZEN);
+    centralStation.recordJourney(PassengerType.ADULT, 200, 0);
+    centralStation.recordJourney(PassengerType.SENIOR_CITIZEN, 100, 0);
 
-    airportStation.addCollection(403);
-    airportStation.addDiscount(100);
-    airportStation.incrementPassengerCount(PassengerType.ADULT);
-    airportStation.incrementPassengerCount(PassengerType.ADULT);
-    airportStation.incrementPassengerCount(PassengerType.KID);
-    airportStation.incrementPassengerCount(PassengerType.KID);
+    airportStation.recordJourney(PassengerType.ADULT, 100, 100);
+    airportStation.recordJourney(PassengerType.KID, 50, 0);
+    airportStation.recordJourney(PassengerType.ADULT, 203, 0);
+    airportStation.recordJourney(PassengerType.KID, 50, 0);
 
     when(stationRepository.findAll()).thenReturn(Arrays.asList(centralStation, airportStation));
 

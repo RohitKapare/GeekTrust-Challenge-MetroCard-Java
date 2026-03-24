@@ -21,6 +21,12 @@ public class Station {
     }
   }
 
+  public void recordJourney(PassengerType type, int fare, int discount) {
+    this.totalCollection += fare;
+    this.totalDiscount += discount;
+    this.passengerCount.put(type, passengerCount.getOrDefault(type, 0) + 1);
+  }
+
   public String getStationName() {
     return stationName;
   }
@@ -37,15 +43,4 @@ public class Station {
     return Collections.unmodifiableMap(passengerCount);
   }
 
-  public void addCollection(int amount) {
-    this.totalCollection += amount;
-  }
-
-  public void addDiscount(int amount) {
-    this.totalDiscount += amount;
-  }
-
-  public void incrementPassengerCount(PassengerType type) {
-    passengerCount.put(type, passengerCount.get(type) + 1);
-  }
 }

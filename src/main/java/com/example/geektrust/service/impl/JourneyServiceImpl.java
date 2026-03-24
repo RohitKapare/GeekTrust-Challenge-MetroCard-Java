@@ -52,9 +52,7 @@ public class JourneyServiceImpl implements JourneyService {
 
     int serviceFee = metroCardService.rechargeIfRequired(card, fare);
     card.deduct(fare);
-    station.addCollection(fare + serviceFee);
-    station.addDiscount(discount);
-    station.incrementPassengerCount(passengerType);
+    station.recordJourney(passengerType, fare + serviceFee, discount);
 
   }
 
