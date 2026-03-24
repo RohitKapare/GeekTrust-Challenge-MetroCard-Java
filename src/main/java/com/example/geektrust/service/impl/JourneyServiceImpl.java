@@ -32,28 +32,9 @@ public class JourneyServiceImpl implements JourneyService {
     Station station = stationRepository.findByName((fromStation)).orElseThrow(
         () -> new ResourceNotFoundException("Station not found for name: " + fromStation));
 
-    FareStrategy strategy = FareStrategyFactory.getStrategy(passengerType);
-    int baseFare = strategy.getBaseFare();
-    int discountedFare = strategy.getDiscountedFare();
-
     boolean isReturn = isReturnJourney(cardNumber, fromStation);
-    int fare;
-    int discount;
-
-    if (isReturn) {
-      fare = discountedFare;
-      discount = baseFare - discountedFare;
-      journeyTracker.remove(cardNumber);
-    } else {
-      fare = baseFare;
-      discount = 0;
-      journeyTracker.put(cardNumber, fromStation);
-    }
-
-    int serviceFee = metroCardService.rechargeIfRequired(card, fare);
-    card.deduct(fare);
-    station.recordJourney(passengerType, fare + serviceFee, discount);
-
+    updateJourneyTracker(cardNumber, fromStation, isReturn);
+    processJourney(card, station, passengerType, isReturn);
   }
 
   private boolean isReturnJourney(String cardNumber, String fromStation) {
@@ -64,13 +45,31 @@ public class JourneyServiceImpl implements JourneyService {
     return !lastStation.equalsIgnoreCase(fromStation);
   }
 
+  private void processJourney(MetroCard card, Station station, PassengerType passengerType,
+      boolean isReturn) {
+    FareStrategy strategy = FareStrategyFactory.getStrategy(passengerType);
+    int fare = isReturn ? strategy.getDiscountedFare() : strategy.getBaseFare();
+    int discount = isReturn ? strategy.getBaseFare() - strategy.getDiscountedFare() : 0;
+    int serviceFee = metroCardService.rechargeIfRequired(card, fare);
+    card.deduct(fare);
+    station.recordJourney(passengerType, fare + serviceFee, discount);
+  }
+
+  private void updateJourneyTracker(String cardNumber, String fromStation, boolean isReturn) {
+    if (isReturn) {
+      journeyTracker.remove(cardNumber);
+    } else {
+      journeyTracker.put(cardNumber, fromStation);
+    }
+  }
+
   @Override
   public void printSummary() {
     List<Station> stations = stationRepository.findAll();
     for (Station station : stations) {
       System.out.println("TOTAL_COLLECTION " + station.getStationName()
-          + " " + (int) station.getTotalCollection()
-          + " " + (int) station.getTotalDiscount());
+          + " " + station.getTotalCollection()
+          + " " + station.getTotalDiscount());
       System.out.println("PASSENGER_TYPE_SUMMARY");
 
       station.getPassengerCount().entrySet().stream()
