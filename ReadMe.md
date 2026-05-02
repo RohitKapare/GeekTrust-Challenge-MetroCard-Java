@@ -2,6 +2,14 @@
 
 * Java 1.8/1.11/1.15
 * Gradle 6
+ 
+# Result by GeekTrust:
+---
+
+> This project is evaluated by GeekTrust for ****plagiarism**** and other coding metrics and the result image is added in repository.
+
+![GeekTrust Result](ProjectResult.png)
+
 
 # Note for anyone who want to examine the code:
 
